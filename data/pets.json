@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "label": "EXAMPLE catalog — original pixel creatures, not licensed characters",
+  "pets": [
+    {
+      "id": "blippo",
+      "name": "Blippo",
+      "tagline": "A bouncy blueberry blob who loves snacks",
+      "palette": ["#3b82f6", "#93c5fd", "#1e3a8a", "#fef08a"],
+      "shape": "blob",
+      "favoriteFood": "berry-bites",
+      "baseStats": { "hungerDecay": 0.35, "energyDecay": 0.28, "moodDecay": 0.22, "cleanDecay": 0.18 }
+    },
+    {
+      "id": "sproutlet",
+      "name": "Sproutlet",
+      "tagline": "A leafy sprout who naps in sunbeams",
+      "palette": ["#22c55e", "#86efac", "#14532d", "#fde68a"],
+      "shape": "sprout",
+      "favoriteFood": "leaf-crisp",
+      "baseStats": { "hungerDecay": 0.30, "energyDecay": 0.32, "moodDecay": 0.20, "cleanDecay": 0.25 }
+    },
+    {
+      "id": "emberwick",
+      "name": "Emberwick",
+      "tagline": "A tiny ember fox who sparkles when happy",
+      "palette": ["#f97316", "#fdba74", "#7c2d12", "#fef3c7"],
+      "shape": "fox",
+      "favoriteFood": "crackle-crunch",
+      "baseStats": { "hungerDecay": 0.38, "energyDecay": 0.26, "moodDecay": 0.24, "cleanDecay": 0.20 }
+    }
+  ],
+  "hats": [
+    { "id": "none", "name": "No hat", "level": 1, "emoji": "·", "css": "" },
+    { "id": "beanie", "name": "Cozy Beanie", "level": 2, "emoji": "🧢", "css": "hat-beanie" },
+    { "id": "crown", "name": "Paper Crown", "level": 3, "emoji": "👑", "css": "hat-crown" },
+    { "id": "sprout-cap", "name": "Sprout Cap", "level": 4, "emoji": "🌱", "css": "hat-sprout" },
+    { "id": "star-band", "name": "Star Band", "level": 5, "emoji": "⭐", "css": "hat-star" },
+    { "id": "rainbow", "name": "Rainbow Ribbon", "level": 6, "emoji": "🌈", "css": "hat-rainbow" },
+    { "id": "wizard", "name": "Wizard Cone", "level": 8, "emoji": "🪄", "css": "hat-wizard" },
+    { "id": "astronaut", "name": "Astro Cap", "level": 10, "emoji": "🚀", "css": "hat-astro" }
+  ],
+  "xpPerLevel": [0, 30, 70, 120, 180, 260, 360, 480, 620, 800]
+}

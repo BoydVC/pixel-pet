@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "label": "EXAMPLE care items",
+  "foods": [
+    { "id": "berry-bites", "name": "Berry Bites", "hunger": 28, "mood": 6, "emoji": "🫐", "xp": 4 },
+    { "id": "leaf-crisp", "name": "Leaf Crisp", "hunger": 24, "mood": 8, "emoji": "🥬", "xp": 4 },
+    { "id": "crackle-crunch", "name": "Crackle Crunch", "hunger": 30, "mood": 5, "emoji": "🍪", "xp": 5 },
+    { "id": "rainbow-toast", "name": "Rainbow Toast", "hunger": 35, "mood": 12, "emoji": "🍞", "xp": 8 },
+    { "id": "moon-milk", "name": "Moon Milk", "hunger": 18, "energy": 10, "mood": 10, "emoji": "🥛", "xp": 6 }
+  ],
+  "care": [
+    { "id": "feed", "label": "Feed", "icon": "🍽️", "desc": "Fill the tummy" },
+    { "id": "play", "label": "Play", "icon": "🎮", "desc": "Mini-game fun" },
+    { "id": "nap", "label": "Nap", "icon": "😴", "desc": "Restore energy" },
+    { "id": "wash", "label": "Wash", "icon": "🛁", "desc": "Sparkle clean" }
+  ]
+}

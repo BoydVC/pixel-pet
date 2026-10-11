@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pixel Pet · care game for Vic</title>
+<meta name="theme-color" content="#1a1040">
+<meta name="description" content="Cute offline pixel pet care game — hatch, feed, play, nap, wash. Kid-friendly, no scary fail states.">
+<style>/*__CSS__*/</style>
+</head>
+<body>
+<div class="sky" id="sky" aria-hidden="true">
+  <div class="sunmoon" id="sunmoon"></div>
+  <div class="stars" id="stars"></div>
+  <div class="clouds" id="clouds"></div>
+</div>
+
+<header class="top">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 48 48" width="40" height="40">
+        <rect x="2" y="2" width="44" height="44" rx="12" fill="#2a1850" stroke="#f9a8d4" stroke-width="2"/>
+        <circle cx="24" cy="26" r="10" fill="#93c5fd"/>
+        <circle cx="20" cy="24" r="2" fill="#1e3a8a"/>
+        <circle cx="28" cy="24" r="2" fill="#1e3a8a"/>
+        <path d="M20 30 Q24 34 28 30" fill="none" stroke="#1e3a8a" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="18" y="12" width="12" height="6" rx="2" fill="#f472b6"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Pixel Pet</h1>
+      <p class="tag">care · play · grow · offline for Vic</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <span class="pill safe">kid-safe</span>
+    <span class="pill" id="levelPill">Lv 1</span>
+    <span class="pill" id="xpPill">0 XP</span>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Pixel Pet screens">
+  <button class="tab active" data-view="home" role="tab" aria-selected="true">🏠 Pet</button>
+  <button class="tab" data-view="closet" role="tab" aria-selected="false">🎩 Closet</button>
+  <button class="tab" data-view="game" role="tab" aria-selected="false">🎮 Play</button>
+  <button class="tab" data-view="journal" role="tab" aria-selected="false">📓 Journal</button>
+  <button class="tab" data-view="about" role="tab" aria-selected="false">ℹ️ About</button>
+</nav>
+
+<main>
+  <!-- HATCH (overlay when no pet) -->
+  <section id="view-hatch" class="view hatch-view" hidden>
+    <div class="panel hatch-panel">
+      <p class="eyebrow">Welcome · hatch your friend</p>
+      <h2>Pick a Pixel Pet</h2>
+      <p class="lede">Three EXAMPLE creatures — original names, made of pixel shapes. No scary modes. Care keeps them happy!</p>
+      <div class="hatch-grid" id="hatchGrid"></div>
+      <p class="hint center">You can reset later from About · progress saves in this browser.</p>
+    </div>
+  </section>
+
+  <!-- HOME / PET -->
+  <section id="view-home" class="view active" role="tabpanel">
+    <div class="room" id="room">
+      <div class="room-floor"></div>
+      <div class="room-decor" aria-hidden="true">
+        <div class="window-pane" id="windowPane"></div>
+        <div class="plant-pot"></div>
+        <div class="toy-ball"></div>
+      </div>
+      <div class="pet-stage" id="petStage">
+        <div class="pet-wrap" id="petWrap">
+          <div class="hat-slot" id="hatSlot"></div>
+          <canvas id="petCanvas" width="160" height="160" aria-label="Your pixel pet"></canvas>
+          <div class="speech" id="speech" hidden></div>
+        </div>
+        <div class="pet-nameplate">
+          <strong id="petName">—</strong>
+          <span id="petMoodLabel" class="mood-label">happy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="meters" id="meters" aria-label="Care meters">
+      <div class="meter" data-key="hunger"><span class="m-icon">🍽️</span><div class="m-track"><div class="m-fill" id="mHunger"></div></div><span class="m-val" id="vHunger">100</span></div>
+      <div class="meter" data-key="energy"><span class="m-icon">⚡</span><div class="m-track"><div class="m-fill energy" id="mEnergy"></div></div><span class="m-val" id="vEnergy">100</span></div>
+      <div class="meter" data-key="mood"><span class="m-icon">💛</span><div class="m-track"><div class="m-fill mood" id="mMood"></div></div><span class="m-val" id="vMood">100</span></div>
+      <div class="meter" data-key="clean"><span class="m-icon">✨</span><div class="m-track"><div class="m-fill clean" id="mClean"></div></div><span class="m-val" id="vClean">100</span></div>
+    </div>
+
+    <div class="actions" id="careActions">
+      <button type="button" class="care-btn" data-action="feed" id="btnFeed"><span class="c-ico">🍽️</span><span class="c-lab">Feed</span></button>
+      <button type="button" class="care-btn" data-action="play" id="btnPlay"><span class="c-ico">🎮</span><span class="c-lab">Play</span></button>
+      <button type="button" class="care-btn" data-action="nap" id="btnNap"><span class="c-ico">😴</span><span class="c-lab">Nap</span></button>
+      <button type="button" class="care-btn" data-action="wash" id="btnWash"><span class="c-ico">🛁</span><span class="c-lab">Wash</span></button>
+    </div>
+
+    <div class="food-tray" id="foodTray" hidden>
+      <p class="tray-title">Pick a snack</p>
+      <div class="food-row" id="foodRow"></div>
+      <button type="button" class="btn ghost sm" id="btnCloseFood">Close</button>
+    </div>
+
+    <div class="soft-banner" id="softBanner" hidden>
+      <span id="softBannerText">Your pet is sleepy — a nap or snack will help!</span>
+      <button type="button" class="btn primary sm" id="btnRevive">Care boost</button>
+    </div>
+  </section>
+
+  <!-- CLOSET -->
+  <section id="view-closet" class="view" role="tabpanel" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Hat Closet</h2>
+        <p class="hint">Level up to unlock EXAMPLE cosmetics · hats are decorative only</p>
+      </div>
+      <div class="closet-preview">
+        <canvas id="closetCanvas" width="140" height="140"></canvas>
+        <div>
+          <p class="eyebrow">equipped</p>
+          <h3 id="equippedHatName">No hat</h3>
+          <p class="hint" id="xpProgressHint">Earn XP by caring for your pet</p>
+          <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
+        </div>
+      </div>
+      <div class="hat-grid" id="hatGrid"></div>
+    </div>
+  </section>
+
+  <!-- MINI-GAME -->
+  <section id="view-game" class="view" role="tabpanel" hidden>
+    <div class="panel">
+      <div class="panel-head row">
+        <div>
+          <h2>Bubble Pop</h2>
+          <p class="hint">Tap glowing bubbles before they fade · timing = mood + XP</p>
+        </div>
+        <div class="game-stats">
+          <span class="pill" id="gameScore">Score 0</span>
+          <span class="pill" id="gameTime">15s</span>
+        </div>
+      </div>
+      <div class="game-arena" id="gameArena">
+        <p class="game-idle" id="gameIdle">Press Start — pop as many soft bubbles as you can!</p>
+      </div>
+      <div class="game-controls">
+        <button type="button" class="btn primary lg" id="btnStartGame">Start</button>
+        <button type="button" class="btn ghost lg" id="btnStopGame" hidden>Stop</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNAL -->
+  <section id="view-journal" class="view" role="tabpanel" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Care Journal</h2>
+        <p class="hint">Recent actions · stored in <code>localStorage</code></p>
+      </div>
+      <div class="journal-stats" id="journalStats"></div>
+      <ul class="journal-list" id="journalList"></ul>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="view-about" class="view" role="tabpanel" hidden>
+    <div class="panel about-panel">
+      <h2>About Pixel Pet</h2>
+      <p>Offline-first virtual pet care for Vic. Hatch a friend, keep meters happy, unlock silly hats, and play Bubble Pop. Soft sleepy states only — never scary, never permanent fail.</p>
+      <ul class="about-list">
+        <li>All art is CSS / canvas / SVG pixel shapes</li>
+        <li>Creatures &amp; hats are EXAMPLE originals — not licensed characters</li>
+        <li>Progress stays in this browser (<code>pixel-pet.state.v1</code>)</li>
+        <li>Day / night room follows your local clock</li>
+      </ul>
+      <div class="about-actions">
+        <button type="button" class="btn ghost" id="btnExportSave">Export save</button>
+        <button type="button" class="btn danger" id="btnResetPet">Reset pet</button>
+      </div>
+      <p class="hint">TokenMax burn build · port 4304 · for Boyd / Vic</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Pixel Pet · EXAMPLE creatures · kid-safe care game</span>
+  <span id="clockLabel"></span>
+</footer>
+
+<script>
+window.__PIXEL_PET__ = /*__DATA__*/ null /*__/DATA__*/;
+</script>
+<script>/*__APP__*/</script>
+</body>
+</html>
