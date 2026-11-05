@@ -1,6 +1,6 @@
 # Pixel Pet
 
-Cute offline virtual pet care game for Vic (TokenMax burn). Hatch one of three EXAMPLE pixel creatures, keep hunger / energy / mood / clean meters happy, play Bubble Pop, unlock cosmetic hats, and watch the room shift day → evening → night with the local clock.
+Cute offline virtual pet care game for Sam (TokenMax burn). Hatch one of three EXAMPLE pixel creatures, keep hunger / energy / mood / clean meters happy, play Bubble Pop, unlock cosmetic hats, and watch the room shift day → evening → night with the local clock.
 
 **Hard rule:** kid-safe soft “sleepy” states only — never scary, never permadeath. All art is CSS / canvas / SVG pixel shapes. Progress stays in `localStorage`.
 
